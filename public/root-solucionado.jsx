@@ -1,12 +1,9 @@
-import { Outlet, NavLink, Link, useLoaderData, Form, redirect, useNavigation,useSubmit,} from "react-router-dom";
+import { Outlet, NavLink, Link, useLoaderData, Form, redirect, useNavigation } from "react-router-dom";
 import { getContacts, createContact } from "../contacts";
-import { useEffect } from "react";
 
-export async function loader({ request }) {
-  const url = new URL(request.url);
-  const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
-  return { contacts, q };
+export async function loader() {
+  const contacts = await getContacts();
+  return { contacts };
 }
 
 export async function action() {
@@ -15,13 +12,8 @@ export async function action() {
 }
 
 export default function Root() {
-  const { contacts, q } = useLoaderData();
+  const { contacts } = useLoaderData();
   const navigation = useNavigation();
-  const submit = useSubmit();
- 
-  useEffect(() => {
-    document.getElementById("q").value = q;
-  }, [q])
 
   return (
     <>
@@ -66,26 +58,20 @@ export default function Root() {
         </nav>
 
         <div>
-          <Form id="search-form" role="search">
+          <form id="search-form" role="search">
             <input
               id="q"
               aria-label="Search contacts"
               placeholder="Search"
               type="search"
               name="q"
-              defaultValue={q}
-            
-              onChange={(event) => {        //Esta parte me permite buscar apenas se esta digitando una letra gracias a Submit
-                submit(event.currentTarget.form);
-              }}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
-          </Form>
-          
-
-
-
+          </form>
+          <form method="post">
+            <button type="submit">New</button>
+          </form>
         </div>
         <nav>
           <ul>
@@ -107,7 +93,5 @@ export default function Root() {
     </>
   );
 }
-/*<form method="post">
-            <button type="submit">New</button>
-          </form>*/
+
  
