@@ -19,6 +19,13 @@ export default function Root() {
   const navigation = useNavigation();
   const submit = useSubmit();
  
+  const searching =
+  navigation.location &&
+  new URLSearchParams(navigation.location.search).has(
+    "q"
+  );
+
+
   useEffect(() => {
     document.getElementById("q").value = q;
   }, [q])
@@ -69,6 +76,7 @@ export default function Root() {
           <Form id="search-form" role="search">
             <input
               id="q"
+              className={searching ? "loading" : ""}
               aria-label="Search contacts"
               placeholder="Search"
               type="search"
@@ -76,10 +84,13 @@ export default function Root() {
               defaultValue={q}
             
               onChange={(event) => {        //Esta parte me permite buscar apenas se esta digitando una letra gracias a Submit
-                submit(event.currentTarget.form);
+                const isFirstSearch = q == null;
+                submit(event.currentTarget.form, {//Admnistrar la pila de Historial
+                  replace: !isFirstSearch,
+                });
               }}
             />
-            <div id="search-spinner" aria-hidden hidden={true} />
+            <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
           </Form>
           
