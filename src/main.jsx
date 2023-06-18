@@ -11,14 +11,14 @@ import {createBrowserRouter,RouterProvider,} from "react-router-dom";
 import { action as destroyAction } from "./routes/destroy";
 import "./index.css";
 
-
+/*
 const router = createBrowserRouter([
   {
     path: "/",
     element: <div>Hello world!</div>,
   },
 ]);
-/*
+*/
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-*/
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
