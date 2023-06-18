@@ -17,17 +17,14 @@ export async function loader({ params }) {
   }
     return { contact };
 }
+
 export default function Contact() {
-  const { contact } = useLoaderData();
-  
-  /*const contact = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://placekitten.com/g/200/200",
-    twitter: "your_handle",
-    notes: "Some notes",
-    favorite: true,
-  };*/
+const { contact = 
+  { first: "Your", last: "Name", 
+  avatar: "https://placekitten.com/g/200/200", 
+  twitter: "your_handle", notes: "Some notes",
+   favorite: true } } = useLoaderData();
+    
 
   return (
     <div id="contact">
